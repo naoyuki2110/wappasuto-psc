@@ -12,5 +12,39 @@
     height: 6px;
     content: '';
     border-radius: 3px;
-    background: -webkit-linear-gradient(0deg, #f51651, #f5b82a);
+    background: #198754;
+}
+
+.mds2 {
+    position: relative;
+    padding: 45px 1rem;
+    text-align: center;
+}
+
+.mds2:before {
+    position: absolute;
+    bottom: 20px;
+    left: calc(50% - 75px);
+    width: 150px;
+    height: 6px;
+    content: '';
+    border-radius: 3px;
+    background: #0d6efd;
+}
+
+.mds3 {
+    position: relative;
+    padding: 45px 1rem;
+    text-align: center;
+}
+
+.mds3:before {
+    position: absolute;
+    bottom: 20px;
+    left: calc(50% - 75px);
+    width: 150px;
+    height: 6px;
+    content: '';
+    border-radius: 3px;
+    background: -webkit-linear-gradient(0deg, #198754, #0d6efd);
 }

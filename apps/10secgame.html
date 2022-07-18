@@ -1,0 +1,238 @@
+<head>
+    <meta name="description" content="Webアプリやツールなどを無料で提供。オンラインウェブアプリサイト「Wappasuto（ワッパスト）」" />
+    <meta property="og:url" content="https://naoyuki2110.github.io/wappasuto-psc/apps/10secgame" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="10秒で止めるゲーム | Wappasuto（ワッパスト）" />
+    <meta property="og:description" content="Webアプリやツールなどを無料で提供。オンラインウェブアプリサイト「Wappasuto（ワッパスト）」" />
+    <meta property="og:site_name" content="Wappasuto（ワッパスト）" />
+    <meta property="og:image" content="https://naoyuki2110.github.io/wappasuto-psc/assets/images/wappasuto-mark-01.png" />
+    <title>10秒で止めるゲーム | Wappasuto（ワッパスト）</title>
+    <link rel="icon" type="image/x-icon" href="https://naoyuki2110.github.io/wappasuto-psc/assets/images/favicon.ico">
+    <link rel="stylesheet" href="/wappasuto-psc/css/theme1.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg bg-light border-bottom border-success">
+    <div class="container-fluid">
+      <a class="navbar-brand ms-3" href="#">
+      <img src="/wappasuto-psc/assets/images/wappasuto-logo-01.png" alt="" width="128" height="32">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
+          <li class="nav-item">
+            <a class="nav-link active fw-bold" aria-current="page" href="#">TOP</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="#">アプリ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="#">
+              ツール
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+    <h1 class="text-center mds1">10秒で止めるゲーム</h1>
+    <h4 class="text-center pb-3 border-bottom border-success text-muted">現在、αテスト中です</h4>
+    <div class="container py-3">
+    <div class="row justify-content-center">
+      <h1 class="text-center" id="restext"></h1>
+      <div class="py-3 col-lg-5">
+      <h1 class="text-center fw-light bg-dark text-white rounded" style="font-size:80px;" id="timetext">0.000<span class="fs-6"> 秒</span></h1>
+        <button class="btn btn-success py-3 w-100" onclick="clickevent()" id="srtbtn">スタート！</button>
+        <div class="py-3">
+          <button class="btn btn-danger py-2 w-100" onclick="clickreset()" id="resetbtn" disabled>リセット</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- Footer -->
+    <div class="bg-white border-top border-success">
+      <p class="text-center py-3">2022 PSCグループ<br>Pasuto / naoyuki</p>
+    </div>
+    <style>
+  .mds1 {
+      position: relative;
+      padding: 45px 1rem;
+      text-align: center;
+  }
+  
+  .mds1:before {
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 75px);
+      width: 150px;
+      height: 6px;
+      content: '';
+      border-radius: 3px;
+      background: #198754;
+  }
+  
+  .mds2 {
+      position: relative;
+      padding: 45px 1rem;
+      text-align: center;
+  }
+  
+  .mds2:before {
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 75px);
+      width: 150px;
+      height: 6px;
+      content: '';
+      border-radius: 3px;
+      background: #0d6efd;
+  }
+  
+  .mds3 {
+      position: relative;
+      padding: 45px 1rem;
+      text-align: center;
+  }
+  
+  .mds3:before {
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 75px);
+      width: 150px;
+      height: 6px;
+      content: '';
+      border-radius: 3px;
+      background: -webkit-linear-gradient(0deg, #198754, #0d6efd);
+  }
+      .timeanim{
+        animation-name:timefade;
+        animation-duration:1s;
+        animation-fill-mode: forwards;
+        opacity:1;
+      }
+  
+      @keyframes timefade{
+      from{
+        color:var(--bs-white);
+      }
+        to {
+          color:var(--bs-dark);
+        }
+      }
+    </style>
+  <script>
+    var gameBool = false;
+    var curtime = 0;
+    const srtbtn = document.getElementById("srtbtn");
+    const resetbtn = document.getElementById("resetbtn");
+    const timetext = document.getElementById("timetext");
+    const restext = document.getElementById("restext");
+    var countexec;
+    var fdoutexec;
+    var countBool = false;
+    srttime = 0;
+    function clickevent() {
+      gameBool = !gameBool;
+      if (gameBool) {
+        srtbtn.innerText = "ストップ！";
+        srtbtn.classList.add("btn", "btn-success", "py-2", "w-100");
+        srtbtn.classList.replace("btn-success", "btn-primary");
+        // timetext.classList.replace("text-white", "timeanim");
+        countexec = setInterval("timeCount()", 1);
+        fdoutexec = setTimeout("timefadeOut()", 3000);
+        resetbtn.disabled = true;
+        srttime = Date.now();
+      }
+      else {
+      clearInterval(countexec);
+      clearTimeout(fdoutexec);
+      timetext.classList.replace("timeanim", "text-white");
+      curtime = (Date.now() - srttime);
+      timetext.innerHTML = `${Math.floor(curtime / 1000)}.${Math.floor(curtime % 1000).toString().padStart(3, "0")}<span class="fs-6"> 秒</span>`;
+      resultCalc();
+        // srtbtn.innerHTML = "<button class=\"btn btn-success py-2 w-100\" onclick=\"clickevent()\" id=\"srtbtn\">スタート！</button>";
+        srtbtn.innerText = "スタート！";
+        srtbtn.classList.add("btn", "btn-primary", "py-2", "w-100");
+        srtbtn.classList.replace("btn-primary", "btn-success");
+        srtbtn.disabled = true;
+        resetbtn.disabled = false;
+      }
+    }
+    function timeCount() {
+      // curtime += 0.3;
+      curtime = (Date.now() - srttime);
+      timetext.innerHTML = `${Math.floor(curtime / 1000)}.${Math.floor(curtime % 1000).toString().padStart(3, "0")}<span class="fs-6"> 秒</span>`;
+      // timetext.innerText = parseInt(timetext.innerText).toFixed(3);
+      // setInterval("timeCount()", 10);
+    }
+    function clickreset() {
+      curtime = 0;
+      timetext.innerHTML = `0.000<span class="fs-6"> 秒</span>`;
+      // timetext.innerText = parseInt(timetext.innerText).toFixed(3);
+      srtbtn.disabled = false;
+      resetbtn.disabled = true;
+      restext.innerText = "";
+    }
+    function timefadeOut()
+    {
+      timetext.classList.replace("text-white", "timeanim");
+      setTimeout(function() {
+        clearInterval(countexec);
+        timetext.innerHTML = "-.---<span class=\"fs-6\"> 秒</span>";
+      }, 1000);
+    }
+    
+    function resultCalc()
+    {
+      let rdChara = Math.floor(Math.random() * 5);
+      let selifs1 = ["速すぎです...。", "少し速すぎる気がします...。", "ちょっと速すぎじゃない？", "......速すぎ。", "ちょっと速すぎるよぉ！"];
+      let selifs2 = ["ええっ！？こんな速い人いるの！？", "なんと！こんな速く止まるとはびっくりです！", "うっそぉ、これいくらなんでも速すぎでしょ！", ".....", "えっ！？プレイヤーさんとっても速すぎるよ！"];
+      let selifs3 = ["少し遅いです...。", "少し遅い気がします...。", "ちょっと遅くない？", "......遅い。", "ちょっと遅いよぉ！"];
+      let selifs4 = ["惜っしぃ！", "惜しかったですね", "やるねぇ！", "......惜しい。", "あー！あともう少しなのにぃ！"];
+      let selifs5 = ["惜っしぃぃぃ！！", "惜しい！もう少しでしたね", "惜っしい！もう少しだねぇ", "......惜しすぎ。", "あーー！あとほんのもう少しなのにぃぃ！！"];
+      let selifs6 = ["なんと！まさかの10秒ぴったりで止められました！すごーい！", "エクセレント！！まさかのピタリ賞です！", "うっそでしょ！まさかのピタリ！？なねぇモモ、いたずらしてないよね？", "ピタリ賞...おめでとう。", "すっごぉーい！！モモ、ピタリ賞久しぶりに見たよ！"];
+      let selifs7 = ["少し速いです...。", "少し速い気がします...。", "ちょっと速くない？", "......速い。", "ちょっと速いよぉ！"];
+      let selifs8 = ["遅すぎです...。", "少し遅すぎる気がします...。", "ちょっと遅すぎじゃない？", "......遅すぎ。", "ちょっと遅すぎるよぉ！"];
+      let selifs9 = ["ええっ！？こんな遅い人いるの！？", "なんと。こんな遅く止まるとはびっくりです。", "うっそぉ、これいくらなんでも遅すぎでしょ。", "...........。", "えっ..。プレイヤーさんとっても遅すぎるよ"];
+      if(curtime >= 200 && curtime <= 8000){
+        restext.innerText = selifs1[rdChara];
+      }
+      else if(curtime < 200){
+        restext.innerText = selifs2[rdChara];
+      }
+      else if(curtime > 8000 && curtime <= 9200){
+        restext.innerText = selifs3[rdChara];
+      }
+      else if(curtime > 9200 && curtime <= 9700){
+        restext.innerText = selifs4[rdChara];
+      }
+      else if(curtime > 9700 && curtime <= 9999){
+        restext.innerText = selifs5[rdChara];
+      }
+      else if(curtime == 10000){
+        restext.innerText = selifs6[rdChara];
+      }
+      else if(curtime > 10000 && curtime <= 10300){
+        restext.innerText = selifs5[rdChara];
+      }
+      else if(curtime > 10300 && curtime <= 10800){
+        restext.innerText = selifs4[rdChara];
+      }
+      else if(curtime > 10800 && curtime <= 12000){
+        restext.innerText = selifs7[rdChara];
+      }
+      else if(curtime > 12000 && curtime <= 19800){
+        restext.innerText = selifs8[rdChara];
+      }
+      else if(curtime > 19800){
+        restext.innerText = selifs9[rdChara];
+      }
+    }
+  </script>
+  </body>
