@@ -52,6 +52,7 @@
       <div class="py-3 col-lg-5">
       <h1 class="text-center fw-light bg-dark text-white rounded" style="font-size:80px;" id="counttext">0.000<span class="fs-6"> ms</span></h1>
       <h1 class="text-center fw-light bg-light text-dark border border-dark rounded" style="font-size:30px;" id="remcttext">000</h1>
+      <h1 class="text-center fw-light bg-light text-dark border border-dark rounded" style="font-size:25px;" id="ctdowntext">0</h1>
         <button class="btn btn-success py-3 w-100" onclick="clickevent()" id="srtbtn">スタート！</button>
         <div class="py-3">
           <button class="btn btn-danger py-2 w-100" onclick="clickreset()" id="resetbtn" disabled>停止</button>
@@ -88,6 +89,7 @@
     const counttext = document.getElementById("counttext");
     const remcttext = document.getElementById("remcttext");
     const restext = document.getElementById("restext");
+    const ctdowntext = document.getElementById("ctdowntext");
     var countexec;
     var fdoutexec;
     var countBool = false;
@@ -105,14 +107,7 @@
         srtbtn.classList.add("btn", "btn-success", "py-2", "w-100");
         srtbtn.classList.replace("btn-success", "btn-primary");
         counttext.innerHTML = `-.---<span class="fs-6"> ms</span>`;
-        resetbtn.disabled = false;
-        resetbtn.innerText = "停止";
-        remct = 20;
-        remcttext.innerText = `${remct.toString().padStart(3, "0")}`;
-        countBool = true;
-        gametype = 2;
-        befms = aftms;
-        aftms = Date.now();
+        startctDown();
       }
       else if (gametype == 2) {
         counttext.innerHTML = `-.---<span class="fs-6"> ms</span>`;
@@ -162,6 +157,28 @@
       srtbtn.classList.replace("btn-primary", "btn-success");
       restext.innerText = "";
       avrcount = [];
+    }
+    
+    function startctDown() {
+    srtbtn.disabled = true;
+      var ct = 3;
+      ctdowntext.innerText = `${ct}`;
+      var intval = setInterval(function(){
+      ct -= 1;
+      ctdowntext.innerText = `${ct}`;
+      if(ct <= 0){
+        srtbtn.disabled = false;
+        resetbtn.disabled = false;
+        resetbtn.innerText = "停止";
+        remct = 20;
+        remcttext.innerText = `${remct.toString().padStart(3, "0")}`;
+        countBool = true;
+        gametype = 2;
+        befms = aftms;
+        aftms = Date.now();
+        clearInterval(intval);
+      }
+      }, 1000)
     }
     
     function countResult() {
