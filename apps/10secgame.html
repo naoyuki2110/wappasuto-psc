@@ -92,6 +92,7 @@
     const restext = document.getElementById("restext");
     var countexec;
     var fdoutexec;
+    var fdoutexec2;
     var countBool = false;
     srttime = 0;
     function clickevent() {
@@ -109,6 +110,7 @@
       else {
       clearInterval(countexec);
       clearTimeout(fdoutexec);
+      clearTimeout(fdoutexec2);
       timetext.classList.replace("timeanim", "text-white");
       curtime = (Date.now() - srttime);
       timetext.innerHTML = `${Math.floor(curtime / 1000)}.${Math.floor(curtime % 1000).toString().padStart(3, "0")}<span class="fs-6"> 秒</span>`;
@@ -139,7 +141,7 @@
     function timefadeOut()
     {
       timetext.classList.replace("text-white", "timeanim");
-      setTimeout(function() {
+      fdoutexec2 = setTimeout(function() {
         clearInterval(countexec);
         timetext.innerHTML = "-.---<span class=\"fs-6\"> 秒</span>";
       }, 1000);
